@@ -41,10 +41,11 @@ module.exports = function(grunt) {
         var data = grunt.file.read(src);
 
         yaml.loadAll(data, function(result) {
-          var json = JSON.stringify(result, null, options.space);
+          var json;
           if(typeof options.middleware === 'function'){
-            options.middleware(result, json);
+            result = options.middleware(result);
           }
+          json = JSON.stringify(result, null, options.space);
           if(!options.disableDest){
             grunt.file.write(dest, json);
             grunt.log.writeln('Compiled ' + src.cyan + ' -> ' + dest.cyan);

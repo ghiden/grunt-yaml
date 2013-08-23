@@ -49,17 +49,16 @@ grunt.initConfig({
   },
 })
 ```
-In a situation where you do not want to output a file, but want to manipulate the data on your own, you can provide a middleware function and disable the destination write process:
+If you want to manipulate the data on your own, you can provide a middleware function and return the manupulated response for serializing to JSON:
 
 ```js
 grunt.initConfig({
   yaml: {
     your_target: {
       options: {
-        disableDest: true,    // Grunt will not create a config.json as per the destination of the files object
-        middleware: function(response, json){
-          console.log(response);    // YAML data
-          console.log(json);        // Stringified JSON
+        middleware: function(response){
+            // do something with JSON object
+            return response
         },
         space: 4
       },
