@@ -18,7 +18,7 @@ module.exports = function(grunt) {
       constructors: {},
       ignored: null,
       space: 2,
-      middleware: function(){},
+      middleware: function(result){ return result; },
       disableDest: false
     });
     var taskDone = this.async();

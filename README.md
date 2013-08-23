@@ -92,19 +92,15 @@ A Object that defines custom constructors to [js-yaml](https://github.com/nodeca
 
 #### options.middleware
 Type: `function`
-Default value: `function(response, json){}`
+Default value: `function(response){ return response; }`
 
-A function which provides you an interface to manipulate the YAML before it becomes JSON, or manipulate the JSON after being stringified.
+A function which provides you an interface to manipulate the parsed-JSON object before it gets strigified into JSON.
 
 #### options.disableDest
 Type: `Boolean`
 Default: `false`
 
 A boolean flag which will prevent grunt-yaml from creating an output file if you would like to just work with the middleware function.
-
-### Usage Examples
-
-See [my repository](https://github.com/shiwano/cw-schema).
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][].
