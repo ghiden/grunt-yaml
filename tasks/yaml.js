@@ -43,7 +43,12 @@ module.exports = function(grunt) {
         yaml.loadAll(data, function(result) {
           var json;
           if(typeof options.middleware === 'function'){
-            result = options.middleware(result);
+            try {
+              result = options.middleware(result);
+            }
+            catch(e) {
+              return done(e);
+            }
           }
           json = JSON.stringify(result, null, options.space);
           if(!options.disableDest){
