@@ -40,23 +40,28 @@ module.exports = function(grunt) {
         var dest = filePair.dest.replace(/\.ya?ml$/, '.json');
         var data = grunt.file.read(src);
 
-        yaml.loadAll(data, function(result) {
-          var json;
-          if(typeof options.middleware === 'function'){
-            try {
-              result = options.middleware(result);
+        try {
+          yaml.loadAll(data, function(result) {
+            var json;
+            if(typeof options.middleware === 'function'){
+              try {
+                result = options.middleware(result);
+              }
+              catch(e) {
+                return done(e);
+              }
             }
-            catch(e) {
-              return done(e);
+            json = JSON.stringify(result, null, options.space);
+            if(!options.disableDest){
+              grunt.file.write(dest, json);
+              grunt.log.writeln('Compiled ' + src.cyan + ' -> ' + dest.cyan);
             }
-          }
-          json = JSON.stringify(result, null, options.space);
-          if(!options.disableDest){
-            grunt.file.write(dest, json);
-            grunt.log.writeln('Compiled ' + src.cyan + ' -> ' + dest.cyan);
-          }
-          done();
-        });
+            done();
+          });
+        }
+        catch(e) {
+          return done(e);
+        }
       });
     }, function(err) {
       if (err) {
