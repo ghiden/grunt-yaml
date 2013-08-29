@@ -57,10 +57,9 @@ module.exports = function(grunt) {
       },
       middleware_options: {
         options: {
-          disableDest: true,
-          middleware: function(response, json){
-            grunt.file.write('tmp/middleware_options/response.json', JSON.stringify(response));
-            grunt.file.write('tmp/middleware_options/json.json', json);
+          middleware: function(response){
+            response.version = 1;
+            return response;
           }
         },
         files: {
